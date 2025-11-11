@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://c5myb1s4k1g4n"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/Ball.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/Peg.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/SlotArea.tscn" id="4"]
+[ext_resource type="Script" path="res://scripts/UpdraftArea.gd" id="5"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+extents = Vector2(210, 10)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="SpawnPoints" type="Node2D" parent="."]
+
+[node name="Top" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(210, 40)
+
+[node name="Left" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(180, 40)
+
+[node name="Right" type="Marker2D" parent="SpawnPoints"]
+position = Vector2(240, 40)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("1")
+rotation = 1.5708
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(420, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("1")
+rotation = 1.5708
+
+[node name="Floor" type="StaticBody2D" parent="Walls"]
+position = Vector2(210, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Floor"]
+shape = SubResource("1")
+
+[node name="PegContainer" type="Node2D" parent="."]
+
+[node name="SlotContainer" type="Node2D" parent="."]
+
+[node name="UpgradeContainer" type="Node2D" parent="."]
+
+[node name="Updraft" type="Area2D" parent="."]
+position = Vector2(210, 240)
+script = ExtResource("5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Updraft"]
+shape = SubResource("1")
+
+[node name="Label" type="Label" parent="Updraft"]
+text = "↑↑↑"
+horizontal_alignment = 1
+vertical_alignment = 1
+modulate = Color(0, 1, 1)
+offset_left = -24.0
+offset_right = 24.0
+offset_top = -12.0
+offset_bottom = 12.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PlayThreshold" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+position = Vector2(0, 240)
+size = Vector2(420, 2)
+color = Color(0.2, 0.2, 0.2, 1)
+
+[node name="BallPreview" parent="UI" instance=ExtResource("2")]
+visible = false
+
+[node name="PegPreview" parent="UI" instance=ExtResource("3")]
+visible = false
+
+[node name="SlotPreview" parent="UI" instance=ExtResource("4")]
+visible = false
